@@ -129,5 +129,15 @@ public
 .yarn/install-state.gz
 .pnp.*
 
+# quartz
+public
+prof
+tsconfig.tsbuildinfo
+.obsidian
+.quartz-cache
+private/
+.replit
+replit.nix
+
 # nix
 .direnv/
