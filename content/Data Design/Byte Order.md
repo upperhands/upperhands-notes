@@ -29,40 +29,17 @@ std::cout << y << std::endl;
 ```
 To find the result, let's first find how `x` is represented. `x` is an `unsigned int`, so it stores 32-bits of information with a value of 1. So, if we were to read the 32 bits starting from the address of `x`, depending on what byte order we are using, we would see the following:
 
-<div align="center">
-
 | Little Endian                      | Big Endian                         |
 | ---------------------------------- | ---------------------------------- |
 | `10000000000000000000000000000000` | `00000000000000000000000000000001` |
 
-</div>
-
 Then, we assign `c` to the address of `x` with the catch that `c` is a `char*`. Then, we dereference `c` and since its type is `char`, we will read the first 8 bytes. Then, the value of `y` will be:
 
-<div align="center">
-
 Little Endian | Big Endian
-:-----------: | :--------:
+------------- | ----------
 `10000000`    | `00000000`
 `1`           | `0`
 
-</div>
-
 So, the output of this very simple program will differ from machine to machine.
-
-## An Important Example
-If you go to Rust's source code, you will see [this](https://github.com/rust-lang/rust/blob/a580b5c379b4fca50dfe5afc0fc0ce00921e4e00/library/portable-simd/crates/core_simd/src/to_bytes.rs#L112C13-L120C14) code snippet:
-```rust
-#[inline]
-fn from_le_bytes(bytes: Self::Bytes) -> Self {
-    let ret = Self::from_ne_bytes(bytes);
-    if cfg!(target_endian = "little") {
-        ret
-    } else {
-        swap_bytes!($ty, ret)
-    }
-}
-```
-This function aims to convert bytes stored as little-endian to big-endian. Hence it needs to swap the bytes. There are many more examples you can find.
 
 [^1]: Apparently, there are some architectures allowing switchable Endianness in certain operations. You can read more about it [here](https://en.wikipedia.org/wiki/Endianness#Bi-endianness)
