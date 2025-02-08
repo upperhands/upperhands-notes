@@ -17,7 +17,9 @@ A DRAM cell consists of a **capacitor (C)**, a **transistor (M)**, an **access l
 - **Transistor**: Used to guard the access to the state. When the transistor is on, the capacitor can be read or written.
 - **Access Line**: Controls the transistor by turning it on or off.
 - **Data Line**: Used to read from or write to the capacitor.
+
 The design of DRAM has a number of complications.
+
 1. Reading (data) from the cell causes the capacitor's charge to be drained into the bit line. This means, in order to use the cell properly, you will need to recharge the cell - *cost*.
 2. A fully charged capacitor holds tens of thousands of electrons. Even though the resistance of the capacitor is high, it only takes a short time for the capacity to dissipate. This problem is called **leakage**. This problem is the main reason why a DRAM cell, even if it is off, must be constantly refreshed. For most DRAM chips, a cell requires refreshing every `64ms`. When recharging, access to the memory is not possible--refresh is simply a read operation with the result being discarded (`_ = readMem(myMem)`)[^1].
 3. Another problem is a bit more basic, I guess: deciding if the stored information is `1` or `0`. At the end of the day, what you have is some number of electrons transferred from the capacitor to the data line. In order to decide what they are, we need to use an amplifier.
