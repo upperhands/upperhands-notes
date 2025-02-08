@@ -134,6 +134,7 @@ public
 prof
 tsconfig.tsbuildinfo
 .obsidian
+.obsidian.vimrc
 .quartz-cache
 private/
 .replit
